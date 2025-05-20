@@ -101,65 +101,32 @@ void PreOrder (Isi_Tree P){
 
 void InOrder (Isi_Tree P){
 
-    // int current;
-    // boolean isResmi;
+    int current;
+    boolean isResmi;
 
-    // current = 1;
-    // isResmi = true;
+    current = 1;
+    isResmi = true;
 
-    // while(current != 0 ){
-    //     if(P[current].ps_fs != 0 && isResmi){
-    //         current = P[current].ps_fs;
-    //     }else{
-    //         printf("%c\n", P[current].info);
-
-    //         // if(isResmi){
-    //         //     printf("%c\n", P[current].info);
-    //         // }
-
-    //         // if(current == P[P[current].ps_pr].ps_fs){
-    //         // }
-            
-    //         if(P[current].ps_nb != 0){
-    //             printf("%c\n", P[P[current].ps_pr].info);
-    //             current = P[current].ps_nb;
-    //             isResmi = true;
-    //         }else{
-    //             current = P[current].ps_pr;
-    //             isResmi = false;
-    //         }
-    //     }
-    // }
-
-    int current = 1;           // Mulai dari root (indeks 1)
-    boolean fromFirstChild = false; // Flag untuk menandai apakah baru kembali dari anak pertama
-    boolean printedParent = false;  // Flag untuk menandai apakah parent sudah dicetak
-
-    while (current != 0) {
-        if (!fromFirstChild && P[current].ps_fs != 0) {
-            // Masuk ke anak pertama jika belum dikunjungi
+    while(current != 0 ){
+        if(P[current].ps_fs != 0 && isResmi){
             current = P[current].ps_fs;
-            printedParent = false;
-        } else {
-            // Cetak parent jika belum dicetak dan ini adalah next brother pertama
-            if (!printedParent && fromFirstChild) {
-                printf("%c\n", P[P[current].ps_pr].info);
-                printedParent = true;
+        }else{
+
+            if(isResmi){
+                printf("%c\n", P[current].info);
             }
-
-            // Cetak node saat ini
-            printf("%c\n", P[current].info);
-
-            if (P[current].ps_nb != 0) {
-                // Pindah ke saudara berikutnya
+            
+            if(current == P[P[current].ps_pr].info){
+                printf("%c\n", P[P[current].ps_pr].info);
+            }
+            
+            if(P[current].ps_nb != 0){
+                printf("%c\n", P[P[current].ps_pr].info);
                 current = P[current].ps_nb;
-                fromFirstChild = false;
-                printedParent = false;
-            } else {
-                // Kembali ke parent
-                fromFirstChild = true;
-                printedParent = true;
+                isResmi = true;
+            }else{
                 current = P[current].ps_pr;
+                isResmi = false;
             }
         }
     }

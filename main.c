@@ -3,21 +3,24 @@
 
 int main() {
     
-    Isi_Tree tree;
-    CreateSampleTree(tree);
+    Isi_Tree Tree;
+    CreateSampleTree(Tree);
+    int menu;
+    char cari;
 
     // Contoh penggunaan traversal
     printf("PreOrder Traversal:\n");
-    PreOrder(tree);
+    PreOrder(Tree);
 
     printf("\nInOrder Traversal:\n");
-    InOrder(tree);
+    InOrder(Tree);
 
     printf("\nPostOrder Traversal:\n");
-    PostOrder(tree);
+    PostOrder(Tree);
 
     printf("\nLevelOrder Traversal:\n");
-    Level_order(tree, 10);
+    Level_order(Tree, 10);
+
 
     return 0;
 }
