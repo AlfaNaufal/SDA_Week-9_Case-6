@@ -95,4 +95,6 @@ int Depth (Isi_Tree P);
 
 int Max (infotype Data1, infotype Data2);
 /* Mengirimkan Nilai terbesar dari dua data */
+
+boolean CompareTree(Isi_Tree T1, Isi_Tree T2);
 #endif
