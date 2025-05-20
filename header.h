@@ -28,6 +28,8 @@ void Create_tree(Isi_Tree X, int Jml_Node);
 // Tujuan mengentrykan Non Binary Tree ke array Isi_Tree dengan pola Level Order
 // Jml Node adalah banyaknya elemen dalam Tree yang menjadi parameter input
 
+// void Create_tree(Isi_Tree X, int Jml_Node);
+
 void CreateSampleTree(Isi_Tree X);
 // Fungsi ini bertujuan untuk menginisialisasi dan mengisi array
 
@@ -95,4 +97,9 @@ int Depth (Isi_Tree P);
 
 int Max (infotype Data1, infotype Data2);
 /* Mengirimkan Nilai terbesar dari dua data */
+
+boolean CompareTree(Isi_Tree T1, Isi_Tree T2);
+
+void mainMenu();
+
 #endif

@@ -66,6 +66,41 @@ void CreateSampleTree(Isi_Tree X) {
     X[10].ps_pr = 5;
 }
 
+// void Create_tree(Isi_Tree X, int Jml_Node){
+//     int i;
+//     infotype data;
+//     fo(i, n){
+//         printf("Masukkan data node ke-%d: ", i);
+//         scanf(" %c", &data);  
+//         X[i].info = data;
+//         X[i].ps_fs = nil;
+//         X[i].ps_nb = nil;
+//         X[i].ps_pr = nil;
+//     }
+
+    // fo(i, n){
+    //     int child;
+    //     printf("Masukkan child pertama dari %c (0 jika tidak ada): ", X[i].info);
+    //     scanf("%d", &child);
+    //     if(child != 0){
+    //         X[i].ps_fs = child;
+    //         X[child].ps_pr = i;
+
+    //         int sibling = child;
+    //         while(1){
+    //             int next_sibling;
+    //             printf("Masukkan next sibling dari %c (0 jika tidak ada): ", X[sibling].info);
+    //             scanf("%d", &next_sibling);
+    //             if(next_sibling == 0)
+    //                 break;
+    //             X[sibling].ps_nb = next_sibling;
+    //             X[next_sibling].ps_pr = i;
+    //             sibling = next_sibling;
+    //         }
+    //     }
+    // }
+// }
+
 boolean IsEmpty (Isi_Tree P){
     return P[1].info == '\0';
 }
@@ -101,65 +136,33 @@ void PreOrder (Isi_Tree P){
 
 void InOrder (Isi_Tree P){
 
-    // int current;
-    // boolean isResmi;
+    int current;
+    boolean isResmi;
 
-    // current = 1;
-    // isResmi = true;
+    current = 1;
+    isResmi = true;
 
-    // while(current != 0 ){
-    //     if(P[current].ps_fs != 0 && isResmi){
-    //         current = P[current].ps_fs;
-    //     }else{
-    //         printf("%c\n", P[current].info);
-
-    //         // if(isResmi){
-    //         //     printf("%c\n", P[current].info);
-    //         // }
-
-    //         // if(current == P[P[current].ps_pr].ps_fs){
-    //         // }
-            
-    //         if(P[current].ps_nb != 0){
-    //             printf("%c\n", P[P[current].ps_pr].info);
-    //             current = P[current].ps_nb;
-    //             isResmi = true;
-    //         }else{
-    //             current = P[current].ps_pr;
-    //             isResmi = false;
-    //         }
-    //     }
-    // }
-
-    int current = 1;           // Mulai dari root (indeks 1)
-    boolean fromFirstChild = false; // Flag untuk menandai apakah baru kembali dari anak pertama
-    boolean printedParent = false;  // Flag untuk menandai apakah parent sudah dicetak
-
-    while (current != 0) {
-        if (!fromFirstChild && P[current].ps_fs != 0) {
-            // Masuk ke anak pertama jika belum dikunjungi
+    while(current != 0 ){
+        if(P[current].ps_fs != 0 && isResmi){
             current = P[current].ps_fs;
-            printedParent = false;
-        } else {
-            // Cetak parent jika belum dicetak dan ini adalah next brother pertama
-            if (!printedParent && fromFirstChild) {
-                printf("%c\n", P[P[current].ps_pr].info);
-                printedParent = true;
+        }else{
+            // printf("%c\n", P[current].info);
+
+            if(isResmi){
+                printf("%c\n", P[current].info);
             }
-
-            // Cetak node saat ini
-            printf("%c\n", P[current].info);
-
-            if (P[current].ps_nb != 0) {
-                // Pindah ke saudara berikutnya
+            
+            if(current == P[P[current].ps_pr].info){
+                printf("%c\n", P[P[current].ps_pr].info);
+            }
+            
+            if(P[current].ps_nb != 0){
+                printf("%c\n", P[P[current].ps_pr].info);
                 current = P[current].ps_nb;
-                fromFirstChild = false;
-                printedParent = false;
-            } else {
-                // Kembali ke parent
-                fromFirstChild = true;
-                printedParent = true;
+                isResmi = true;
+            }else{
                 current = P[current].ps_pr;
+                isResmi = false;
             }
         }
     }
@@ -219,9 +222,16 @@ void Level_order(Isi_Tree X, int Maks_node){
 
 
 void PrintTree (Isi_Tree P){
-    for (int i = 1; i <= jml_maks; i++) {
+
+    int max = nbElmt(P);
+    for (int i = 1; i <= max; i++) {
         if (P[i].info != '\0') {
-            printf("Node %d: %c, fs: %d, nb: %d, pr: %d\n", i, P[i].info, P[i].ps_fs, P[i].ps_nb, P[i].ps_pr);
+            printf("--> index ke-%d \n", i);
+            printf("info array ke %d          :  %c\n", i, P[i].info);
+            printf("first son array ke %d     :  %d\n", i,  P[i].ps_fs);
+            printf("next brother array ke %d  :  %d\n", i,  P[i].ps_nb);
+            printf("parent array ke %d        :  %d\n", i,  P[i].ps_pr);
+            printf("\n\n");
         }
     }
 }
@@ -264,22 +274,20 @@ int nbElmt (Isi_Tree P){
 
 int nbDaun (Isi_Tree P){
     int nDaun = 0, current = 1;
-    boolean isResmi = false;
+    boolean isResmi = true;
 
     while(current != 0){
-        if(P[current].ps_fs != 0 && !isResmi){
+        if(P[current].ps_fs != 0 && isResmi){
             current = P[current].ps_fs;
         }else{
-            nDaun++;
+            if(P[current].ps_fs == 0){ nDaun++;}
             if(P[current].ps_nb != 0){
                 current = P[current].ps_nb;
-                isResmi = false;
+                isResmi = true;
             }else{
                 current = P[current].ps_pr;
-                isResmi = true;
+                isResmi = false;
             }
-
-
         }
     }
 
@@ -308,9 +316,9 @@ int Level (Isi_Tree P, infotype X){
 
 
 int Depth (Isi_Tree P){
-    int max_depth = 0;
+    int max_depth = 0, max_node = nbElmt(P);
 
-    for (int i = 1; i <= jml_maks; i++) {
+    for (int i = 1; i <= max_node; i++) {
         if (P[i].info != '\0') {
             int depth = 0;
             int current = i;
@@ -333,3 +341,32 @@ int Max (infotype Data1, infotype Data2){
     return (Data1 > Data2) ? Data1 : Data2;
 }
 /* Mengirimkan Nilai terbesar dari dua data */
+
+boolean CompareTree(Isi_Tree T1, Isi_Tree T2) {
+    for (int i = 1; i <= jml_maks; i++) {
+        if (T1[i].info != T2[i].info ||
+            T1[i].ps_fs != T2[i].ps_fs ||
+            T1[i].ps_nb != T2[i].ps_nb ||
+            T1[i].ps_pr != T2[i].ps_pr) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+void mainMenu(){
+        printf("\n=== MENU NON-BINARY TREE ===\n");
+        printf("1. PreOrder Traversal\n");
+        printf("2. InOrder Traversal\n");
+        printf("3. PostOrder Traversal\n");
+        printf("4. Level Order Traversal\n");
+        printf("5. Print Tree\n");
+        printf("6. Search Node\n");
+        printf("7. Jumlah Daun\n");
+        printf("8. Level Node\n");
+        printf("9. Kedalaman Tree\n");
+        printf("10. Bandingkan Dua Tree (Belum tersedia)\n");
+        printf("0. Exit\n");
+        printf("Pilih menu: ");
+}
